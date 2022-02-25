@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest
-from Contact_Model import ContactModel
+from contact_model import ContactModel
 
 class test_add_contact(unittest.TestCase):
     def setUp(self):
@@ -18,7 +18,7 @@ class test_add_contact(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.create_contact(wd, ContactModel(firstname="Alex", middlename="Middle", lastname="Bolduin", nickname="vasua228", title="no title", company="roga i kopita", address=
-                             "Moscow,Pushkina str. app 13", home="Moscow", mobile="880005553535", work_phone="89998887766", fax="87779998888",
+                             "Moscow,Pushkina str. app 13", home_phone="870007784433", mobile_phone="880005553535", work_phone="89998887766", fax="87779998888",
                                              email="email@email.com", email2="none", email3="none2", homepage="www.yandex.ru", byear="1990", ayear="2010", address2="Secondary address",
                                              phone2="homeles", notes="nothing to ptint"))
         self.logout(wd)
@@ -28,7 +28,7 @@ class test_add_contact(unittest.TestCase):
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.create_contact(wd, ContactModel(firstname="", middlename="", lastname="", nickname="", title="", company="", address=
-                             "", home="", mobile="", work_phone="", fax="",
+                             "", home_phone="", mobile_phone="", work_phone="", fax="",
                                              email="", email2="", email3="", homepage="", byear="", ayear="", address2="",
                                              phone2="", notes=""))
         self.logout(wd)
@@ -62,10 +62,10 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_name("address").send_keys(ContactModel.address)
         wd.find_element_by_name("home").click()
         wd.find_element_by_name("home").clear()
-        wd.find_element_by_name("home").send_keys(ContactModel.home)
+        wd.find_element_by_name("home").send_keys(ContactModel.home_phone)
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(ContactModel.mobile)
+        wd.find_element_by_name("mobile").send_keys(ContactModel.mobile_phone)
         wd.find_element_by_name("work").click()
         wd.find_element_by_name("work").clear()
         wd.find_element_by_name("work").send_keys(ContactModel.work_phone)
