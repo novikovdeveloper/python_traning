@@ -1,0 +1,6 @@
+
+
+def test_update_group(app):
+    app.session.login(username="admin", password="secret")
+    app.group.update_group()
+    app.session.logout()
