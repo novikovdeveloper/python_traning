@@ -1,4 +1,4 @@
-class ContactModel:
+class Contact:
     def __init__(self,firstname, middlename, lastname, nickname, title, company, address, home_phone, mobile_phone,
                         work_phone, fax, email, email2, email3, homepage, byear, ayear, address2, phone2, notes):
         self.firstname = firstname
