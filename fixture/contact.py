@@ -80,14 +80,16 @@ class ContactHelper:
         wd.find_element_by_name("notes").send_keys(Contact.notes)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
-    def delete_contact(self):
+    def delete_first_contact(self):
         wd = self.app.wd
+        self.open_contacts_page()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         wd.find_element_by_xpath("//div[@id='content']/form[2]/input[2]").click()
 
-    def update_contact(self):  #обновим не все, а несколько параметров
+    def update_first_contact(self):
         wd = self.app.wd
+        self.open_contacts_page()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         wd.find_element_by_name("firstname").click()
@@ -96,9 +98,55 @@ class ContactHelper:
         wd.find_element_by_name("middlename").send_keys(" updated")
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").send_keys(" updated")
+        wd.find_element_by_name("nickname").click()
+        wd.find_element_by_name("nickname").send_keys(" updated")
+        wd.find_element_by_name("title").click()
+        wd.find_element_by_name("title").send_keys(" updated")
+        wd.find_element_by_name("company").click()
+        wd.find_element_by_name("company").send_keys(" updated")
+        wd.find_element_by_name("address").click()
+        wd.find_element_by_name("address").send_keys(" updated")
+        wd.find_element_by_name("home").click()
+        wd.find_element_by_name("home").send_keys(" updated")
+        wd.find_element_by_name("mobile").click()
+        wd.find_element_by_name("mobile").send_keys(" updated")
+        wd.find_element_by_name("work").click()
+        wd.find_element_by_name("work").send_keys(" updated")
+        wd.find_element_by_name("fax").click()
+        wd.find_element_by_name("fax").send_keys(" updated")
+        wd.find_element_by_name("email").click()
+        wd.find_element_by_name("email").send_keys(" updated")
+        wd.find_element_by_name("email2").click()
+        wd.find_element_by_name("email2").send_keys(" updated")
+        wd.find_element_by_name("email3").click()
+        wd.find_element_by_name("email3").send_keys(" updated")
+        wd.find_element_by_name("homepage").click()
+        wd.find_element_by_name("homepage").send_keys(" updated")
+        wd.find_element_by_name("bday").click()
+        Select(wd.find_element_by_name("bday")).select_by_visible_text("13")
+        wd.find_element_by_xpath("//option[@value='13']").click()
+        wd.find_element_by_name("bmonth").click()
+        Select(wd.find_element_by_name("bmonth")).select_by_visible_text("July")
+        wd.find_element_by_xpath("//option[@value='July']").click()
+        wd.find_element_by_name("byear").click()
+        wd.find_element_by_name("byear").send_keys(" updated")
+        wd.find_element_by_name("aday").click()
+        Select(wd.find_element_by_name("aday")).select_by_visible_text("20")
+        wd.find_element_by_xpath("//div[@id='content']/form/select[3]/option[22]").click()
+        wd.find_element_by_name("amonth").click()
+        Select(wd.find_element_by_name("amonth")).select_by_visible_text("February")
+        wd.find_element_by_xpath("//div[@id='content']/form/select[4]/option[3]").click()
+        wd.find_element_by_name("ayear").click()
+        wd.find_element_by_name("ayear").send_keys(" updated")
+        wd.find_element_by_name("address2").click()
+        wd.find_element_by_name("address2").send_keys(" updated")
+        wd.find_element_by_name("phone2").click()
+        wd.find_element_by_name("phone2").send_keys(" updated")
+        wd.find_element_by_name("notes").click()
+        wd.find_element_by_name("notes").send_keys(" updated")
         wd.find_element_by_name("update").click()
         wd.find_element_by_link_text("home page").click()
 
-
-    def destroy(self):
-        self.app.wd.quit()
+    def open_contacts_page(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
