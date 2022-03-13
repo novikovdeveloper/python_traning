@@ -81,11 +81,14 @@ class ContactHelper:
 
     def get_contact_list(self):
         wd = self.app.wd
-        self.open_contacts_page()
+        self.app.open_home_page()
+        #self.open_contacts_page()
         contacts = []
-        for element in wd.find_elements_by_name("entry"):
-            text = element.text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(Contact(firstname=text, lastname=text, id=id))
+        rows = wd.find_elements_by_xpath("/html/body/div/div[4]/form[2]/table/tbody/tr[@name='entry']")
+        for elements in rows:
+            column = elements.find_elements_by_tag_name("td")
+            firstname = column[2].text
+            lastname = column[1].text
+            id = elements.find_element_by_name("selected[]").get_attribute("value")
+            contacts.append(Contact(lastname=lastname, firstname=firstname, id=id))
         return contacts
-
