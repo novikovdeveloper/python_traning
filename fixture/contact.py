@@ -82,7 +82,6 @@ class ContactHelper:
     def get_contact_list(self):
         wd = self.app.wd
         self.app.open_home_page()
-        #self.open_contacts_page()
         contacts = []
         rows = wd.find_elements_by_xpath("/html/body/div/div[4]/form[2]/table/tbody/tr[@name='entry']")
         for elements in rows:
