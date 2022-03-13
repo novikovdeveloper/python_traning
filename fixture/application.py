@@ -11,7 +11,7 @@ class Application:
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
-        self.update_contact = ContactHelper(self)
+
 
     def is_valid(self):
         try:
