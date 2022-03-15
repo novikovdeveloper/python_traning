@@ -48,25 +48,36 @@ class ContactHelper:
 
     def delete_first_contact(self):
         wd = self.app.wd
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
+        wd = self.app.wd
         self.open_contacts_page()
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
         self.open_contacts_page()
         self.contact_cache = None
 
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
     def select_first_contact(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
 
-    def update_first_contact(self, new_contact_data):
+    def update_first_contact(self):
+        self.update_contact_by_index(0)
+
+    def update_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
         self.open_contacts_page()
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_contact_form(new_contact_data)
         wd.find_element_by_name("update").click()
-        self.open_contacts_page()
+        self.return_to_homepage()
         self.contact_cache = None
 
     def open_contacts_page(self):
@@ -98,3 +109,5 @@ class ContactHelper:
                 id = elements.find_element_by_name("selected[]").get_attribute("value")
                 self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id))
         return list(self.contact_cache)
+
+
