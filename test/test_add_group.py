@@ -7,7 +7,7 @@ import pytest
 
 #генерация случайных тестовых данных
 def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + string.punctuation + " "*10
+    symbols = string.ascii_letters + string.digits
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 
