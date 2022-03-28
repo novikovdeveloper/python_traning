@@ -51,7 +51,7 @@ def pytest_generate_tests(metafunc):
             metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
 
 
-# загрузка данных из модуля с заданным именем
+# загрузка данных из модуля с заданным именем (генератор тестов)
 def load_from_module(module):
     return importlib.import_module("data.%s" % module).testdata
 
