@@ -94,6 +94,16 @@ class ContactHelper:
         self.return_to_homepage()
         self.contact_cache = None
 
+    def update_contact_by_id(self, id, new_contact_data):
+        wd = self.app.wd
+        self.open_contacts_page()
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath("//a[@href='edit.php?id=%s']/img" % id).click()
+        self.fill_contact_form(new_contact_data)
+        wd.find_element_by_name("update").click()
+        self.return_to_homepage()
+        self.contact_cache = None
+
     def open_contacts_page(self):
         wd = self.app.wd
         if not wd.current_url.endswith("/addressbook/"):
