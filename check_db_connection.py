@@ -6,7 +6,7 @@ db = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
 
 # извлечем информацию из таблицы в виде набора строк
 try:
-    l = db.get_contacts_not_in_group(Group(id="138"))
+    l = db.get_contacts_in_group(Group(id="4"))
     for item in l:
         print(item)
     print(len(l))
