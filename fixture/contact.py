@@ -180,6 +180,25 @@ class ContactHelper:
                                                   all_emails_from_home_page=all_emails))
         return list(self.contact_cache)
 
+    def add_first_contact_to_group(self):
+        wd = self.app.wd
+        self.open_contacts_page()
+        self.select_first_contact()
+        wd.find_element_by_name("to_group").click()
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[4]/select/option").click()
+        wd.find_element_by_name("add").click()
+        self.return_to_homepage()
+        self.contact_cache = None
+
+    def remove_first_contact_from_group(self):
+        wd = self.app.wd
+        self.open_contacts_page()
+        wd.find_element_by_name("group").click()
+        wd.find_element_by_xpath("//option[@value='4']").click()
+        self.select_first_contact()
+        wd.find_element_by_name("remove").click()
+        self.return_to_homepage()
+        self.contact_cache = None
 
 
 
