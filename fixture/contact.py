@@ -1,4 +1,5 @@
 from model.contact import Contact
+from selenium.webdriver.support.ui import Select
 import re
 
 
@@ -75,7 +76,8 @@ class ContactHelper:
 
     def select_contact_by_id(self, id):
         wd = self.app.wd
-        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        #wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        wd.find_element_by_id(id).click()
 
     def select_first_contact(self):
         wd = self.app.wd
@@ -111,7 +113,7 @@ class ContactHelper:
 
     def return_to_homepage(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home page").click()
+        wd.find_element_by_link_text("home").click()
 
     def open_contact_to_edit_by_index(self, index):
         wd = self.app.wd
@@ -180,22 +182,22 @@ class ContactHelper:
                                                   all_emails_from_home_page=all_emails.replace(" ", "")))
         return list(self.contact_cache)
 
-    def add_first_contact_to_group(self):
+    def add_contact_to_group(self, id_contact, id_group):
         wd = self.app.wd
         self.open_contacts_page()
-        self.update_contact_by_id()
+        self.select_contact_by_id(id_contact)
         wd.find_element_by_name("to_group").click()
-        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[4]/select/option").click()
+        Select(wd.find_element_by_name("to_group")).select_by_value(id_group)
         wd.find_element_by_name("add").click()
         self.return_to_homepage()
         self.contact_cache = None
 
-    def remove_first_contact_from_group(self):
+    def remove_contact_from_group(self, id_group, id_contact):
         wd = self.app.wd
         self.open_contacts_page()
         wd.find_element_by_name("group").click()
-        wd.find_element_by_xpath("//option[@value='4']").click()
-        self.select_first_contact()
+        Select(wd.find_element_by_name("group")).select_by_value(id_group)
+        self.select_contact_by_id(id_contact)
         wd.find_element_by_name("remove").click()
         self.return_to_homepage()
         self.contact_cache = None
