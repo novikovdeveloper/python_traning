@@ -9,12 +9,12 @@ def test_del_contact_from_group(app, db):
         app.group.create(Group(name='test'))
         groups = db.get_group_list()
     #сначала проверим, что существует хоть один несвободный контакт
-    if len(check_not_free_contact(groups)) == 0:
+    if len(check_not_free_contact(groups, db)) == 0:
         app.contact.create(Contact(firstname='test'))
         new_contacts = db.get_contact_list()
         contact = max(new_contacts, key=Contact.id_or_max)
         app.contact.add_contact_in_group(contact.id, groups[0].id)
-    not_free_contacts = check_not_free_contact(groups)
+    not_free_contacts = check_not_free_contact(groups, db)
     not_free_contact_in_group = not_free_contacts[0]
     group_id = not_free_contact_in_group[1]
     not_free_contacts = not_free_contact_in_group[0]
