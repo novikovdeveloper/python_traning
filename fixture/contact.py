@@ -179,7 +179,7 @@ class ContactHelper:
                 all_emails = cells[4].text
                 self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id,
                                                   all_phones_from_home_page=all_phones, address=address,
-                                                  all_emails_from_home_page=all_emails.replace(" ", "")))
+                                                  all_emails_from_home_page=all_emails))
         return list(self.contact_cache)
 
     def add_contact_to_group(self, id_contact, id_group):
