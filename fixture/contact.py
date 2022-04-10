@@ -76,8 +76,8 @@ class ContactHelper:
 
     def select_contact_by_id(self, id):
         wd = self.app.wd
-        #wd.find_element_by_css_selector("input[value='%s']" % id).click()
-        wd.find_element_by_id(id).click()
+        #wd.find_element_by_id(id).click()
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
     def select_first_contact(self):
         wd = self.app.wd
@@ -192,19 +192,12 @@ class ContactHelper:
         self.return_to_homepage()
         self.contact_cache = None
 
-    def remove_contact_from_group(self, id_group, id_contact):
+    def del_from_group_by_id(self, contact_id, group_id):
         wd = self.app.wd
         self.open_contacts_page()
         wd.find_element_by_name("group").click()
-        Select(wd.find_element_by_name("group")).select_by_value(id_group)
-        self.select_contact_by_id(id_contact)
+        wd.find_element_by_xpath("//form[@id='right']//option[@value='%s']" % group_id).click()
+        self.select_contact_by_id(contact_id)
         wd.find_element_by_name("remove").click()
         self.return_to_homepage()
         self.contact_cache = None
-
-# удаление лишних пробелов
-    def clean_contact(self, contact):
-        return Contact(id=contact.id, firstname=contact.firstname.strip(), lastname=contact.lastname.strip(),
-                       address=contact.address.strip(), home=contact.home.strip(),
-                       mobile=contact.mobile.strip(), work=contact.work.strip(),
-                       phone2=contact.phone2.strip(), email=contact.email, email2=contact.email2, email3=contact.email3)

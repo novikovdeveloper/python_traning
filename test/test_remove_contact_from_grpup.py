@@ -1,37 +1,20 @@
 from model.contact import Contact
 from model.group import Group
+from fixture.orm import ORMFixture
+import random
+
+
+db1 = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
 
 
 def test_del_contact_from_group(app, db):
-    #проверка наличия групп, если их нет, то добавляем
-    groups = db.get_group_list()
-    if len(groups) == 0:
-        app.group.create(Group(name='test'))
-        groups = db.get_group_list()
-    #сначала проверим, что существует хоть один несвободный контакт
-    if len(check_not_free_contact(groups, db)) == 0:
-        app.contact.create(Contact(firstname='test'))
-        new_contacts = db.get_contact_list()
-        contact = max(new_contacts, key=Contact.id_or_max)
-        app.contact.add_contact_in_group(contact.id, groups[0].id)
-    not_free_contacts = check_not_free_contact(groups, db)
-    not_free_contact_in_group = not_free_contacts[0]
-    group_id = not_free_contact_in_group[1]
-    not_free_contacts = not_free_contact_in_group[0]
-    not_free_contact = not_free_contacts[0]
-    app.contact.remove_contact_from_group(not_free_contact.id, group_id)
-    # проверка удаления контакта из группы
-    contacts_in_group = (db.get_contacts_in_group(Group(id=group_id)))[0]
-    list_of_id=[]
-    for item in contacts_in_group:
-        list_of_id.append(item.id)
-    assert not_free_contact.id not in list_of_id
-
-
-def check_not_free_contact(groups, db):
-    not_free_contacts = []
-    for i in range(0, len(groups)):
-          group = groups[i]
-          if db.get_contacts_in_group(group)[0] != []:
-              not_free_contacts.append(db.get_contacts_in_group(group))
-    return not_free_contacts
+    if len(db.get_contact_list()) == 0:
+        app.contact.create(Contact(firstname="test"))
+    if len(db.get_group_list()) == 0:
+        app.group.create(Group(name="test"))
+    contact = random.choice(db.get_contact_list())
+    group = random.choice(db.get_group_list())
+    db.remove_all_contacts_from_all_groups()
+    db.add_random_contact_to_random_group(contact.id, group.id)
+    app.contact.del_from_group_by_id(contact.id, group.id)
+    assert db1.get_contacts_in_group(Group(id=group.id)) == []
