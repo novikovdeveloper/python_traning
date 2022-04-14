@@ -74,5 +74,45 @@ class DbFixture:
             cursor.close()
         return list
 
+    def get_contacts_in_group(self, group_name):
+        list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("SELECT ad.id, ad.firstname, ad.lastname from addressbook ad,address_in_groups gr,group_list gl where ad.deprecated='0000-00-00 00:00:00' and"
+                           " ad.id  = gr.id and gr.group_id = gl.group_id and gl.group_name=%s", [group_name])
+            for a in cursor:
+                (id, firstname, lastname) = a
+                list.append(Contact(id=str(id), firstname=firstname, lastname=lastname))
+        finally:
+            cursor.close()
+        return list
+
+    def get_groups_without_contacts(self):
+        list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select group_id, group_name "
+                           "from group_list "
+                           "where group_id not in (select group_id from address_in_groups)")
+            for row in cursor:
+                (id, name) = row
+                list.append(Group(id=str(id), name=name))
+        finally:
+            cursor.close()
+        return list
+
+    def get_contacts_not_in_any_group(self):
+        list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select id, firstname, lastname from addressbook " 
+                           "where id not in (select id from address_in_groups)")
+            for row in cursor:
+                (id, firstname, lastname) = row
+                list.append(Contact(id=str(id), firstname=firstname, lastname=lastname))
+        finally:
+            cursor.close()
+        return list
+
     def destroy(self):
         self.connection.close()

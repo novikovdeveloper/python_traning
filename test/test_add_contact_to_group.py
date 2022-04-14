@@ -17,8 +17,10 @@ def test_add_contact_to_group(app, db):
     group = random.choice(db.get_group_list())
     db.remove_all_contacts_from_random_group(group.id)
     app.contact.add_contact_to_group(contact.id, group.id)
-    assert clear(str(db1.get_contacts_in_group(Group(id=group.id)))) == clear(str(contact))
+#    assert clear(str(db1.get_contacts_in_group(Group(id=group.id)))) == clear(str(contact))
+    contacts_in_group = db1.get_contacts_in_group(group)
+    assert contact in contacts_in_group
 
+#def clear(s):
+#    return re.sub("[\[\]]", "", s)
 
-def clear(s):
-    return re.sub("[\[\]]", "", s)
