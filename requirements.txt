@@ -4,4 +4,8 @@ selenium
 jsonpickle
 pony
 pymysql
-mysql-connector-python-rf
+--allow-external mysql-connector-python
+mysql-connector-python
+lxml
+pytest-allure-adaptor
+robotframework-python3
